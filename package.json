@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server/server.js",
     "build": "webpack",
-    "dev": "webpack serve --open"
+    "dev": "NODE_ENV=development webpack serve --open"
   },
   "keywords": [],
   "author": "",
