@@ -1,7 +1,15 @@
-import React from "react";
-import { render } from "react-dom";
-import App from "./components/App";
+import React from 'react';
+import { render } from 'react-dom';
 
-import styles from "./scss/app.scss";
+import UserProvider from './contexts/UserProvider';
 
-render(<App />, document.getElementById("root"));
+import App from './components/App';
+
+import styles from './scss/app.scss';
+
+render(
+  <UserProvider>
+    <App />
+  </UserProvider>,
+  document.getElementById('root')
+);
