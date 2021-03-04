@@ -17,10 +17,8 @@ export default function App() {
       <div>
         <Router history={history}>
           <NavBar />
-          {/* <Checkboxes /> */}
           <Route path="/" exact component={Checkboxes} />
           <Route path="/favorites" exact component={FavoritesList} />
-          {/* <ArticlesList /> */}
           <Footer />
         </Router>
       </div>

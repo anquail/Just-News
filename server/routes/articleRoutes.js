@@ -12,6 +12,10 @@ router.get(
   articleController.getArticlesBySource
 );
 
+router.get('/more/:num', articleController.getMoreArticles, (req, res) => {
+  res.send(res.locals.articles);
+});
+
 router.get('/:uid', articleController.getUserArticles, (req, res) => {
   res.send(res.locals.articles);
 });

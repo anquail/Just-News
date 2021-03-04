@@ -8,6 +8,7 @@ export default function Checkboxes() {
   const [list, setList] = useState([]);
   const user = useContext(UserContext);
   const [favorites, setFavorites] = useState([]);
+  const [numArticles, setNumArticles] = useState(16);
 
   const handleCheck = (value) => {
     if (labels.includes(value)) {
@@ -47,6 +48,18 @@ export default function Checkboxes() {
       .then((res) => console.log(res.data));
   };
 
+  const getMoreArticles = () => {
+    axios.get('/articles/more/' + numArticles).then((response) => {
+      console.log(response.data);
+      console.log(Object.values(response.data).flat());
+      setList([...list, ...Object.values(response.data).flat()]);
+      setNumArticles(numArticles + 16);
+    });
+    axios.get('/articles/' + user._id).then((response) => {
+      setFavorites(response.data);
+    });
+  };
+
   return (
     <div>
       <div className="Checkboxes">
@@ -80,7 +93,7 @@ export default function Checkboxes() {
         <label>Wall Street Journal</label>
         <button
           className="ui mini right floated button"
-          style={{ backgroundColor: '#00b1a5', padding: '5px' }}
+          style={{ backgroundColor: 'rgb(0, 159, 207)', padding: '5px' }}
           onClick={handleFilter}
         >
           Filter
@@ -93,6 +106,7 @@ export default function Checkboxes() {
         favorites={favorites}
         setFavorites={setFavorites}
         user={user}
+        getMoreArticles={getMoreArticles}
       />
     </div>
   );

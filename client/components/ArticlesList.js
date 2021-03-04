@@ -12,6 +12,7 @@ export default function ArticlesList({
   favorites,
   setFavorites,
   handleSave,
+  getMoreArticles,
 }) {
   const renderCards = () => {
     if (list.length) {
@@ -31,6 +32,17 @@ export default function ArticlesList({
   return (
     <div className="ArticlesList">
       <div className="ui container items">{renderCards()}</div>
+      {list.length ? (
+        <center>
+          <div
+            className="ui small button"
+            style={{ marginBottom: '30px', marginTop: '-10px' }}
+            onClick={getMoreArticles}
+          >
+            More Articles...
+          </div>
+        </center>
+      ) : null}
     </div>
   );
 }

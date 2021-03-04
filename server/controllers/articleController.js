@@ -64,4 +64,48 @@ articleController.getUserArticles = (req, res, next) => {
     });
 };
 
+articleController.getMoreArticles = (req, res, next) => {
+  const articles = {};
+  const numToSkip = req.params.num * 1;
+
+  if (!req.query.id) {
+    Article.find({}, null, { skip: numToSkip }).then((data) => {
+      data.forEach((article) => {
+        const id = article.source.id;
+
+        if (id) {
+          if (!articles[id]) {
+            articles[id] = [article];
+          } else if (articles[id].length < 2) {
+            articles[id].push(article);
+          }
+        }
+      });
+
+      res.locals.articles = articles;
+      return next();
+    });
+  } else {
+    Article.find({}, null, { skip: numToSkip }).then((data) => {
+      const sources = req.query.id;
+      const total = Math.floor(16 / sources.length);
+
+      data.forEach((article) => {
+        const id = article.source.id;
+
+        if (sources.includes(id)) {
+          if (!articles[id]) {
+            articles[id] = [article];
+          } else if (articles[id].length < total) {
+            articles[id].push(article);
+          }
+        }
+      });
+
+      res.locals.articles = articles;
+      return next();
+    });
+  }
+};
+
 module.exports = articleController;
