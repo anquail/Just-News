@@ -4,9 +4,15 @@ $color3: #c5c6c7;
 $color4: #00b1a5;
 $color5: #17706c;
 
-.ArticlesList,
-.ArticleCard {
+.ArticlesList {
   background-color: $color2;
   padding-top: 25px;
   color: rgb(226, 224, 224);
+  min-height: 82vh;
+}
+
+.Footer {
+  background-color: $color5;
+  width: 100vw;
+  height: 45px;
 }

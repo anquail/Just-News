@@ -17,7 +17,7 @@ module.exports = {
     // },
     proxy: [
       {
-        context: ['/auth/google', '/api', '/articles'],
+        context: ['/auth/google', '/api', '/articles', '/lists'],
         target: 'http://localhost:5000',
       },
     ],

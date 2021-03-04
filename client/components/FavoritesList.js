@@ -1,26 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import UserContext from '../contexts/UserContext';
 import ArticleCard from './ArticleCard';
 
-import articles from './articles';
-
 export default function ArticlesList() {
+  const user = useContext(UserContext);
+  console.log(user);
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    if (!list.length) {
-      axios.get('/articles').then((response) => {
-        console.log(response.data);
-        setList(Object.values(response.data).flat().slice(1));
-      });
+    if (user) {
+      setList(user.favorites);
     }
   }, []);
 
-  const handleSave = (article, listName) => {
+  const handleRemove = (article, listName) => {
     console.log(article, listName);
-    axios
-      .post('api/lists/' + listName, { article })
-      .then((res) => console.log(res.data));
+    // axios
+    //   .delete('api/lists/' + listName, { article })
+    //   .then((res) => console.log(res.data));
   };
 
   const renderCards = () => {
@@ -33,10 +31,10 @@ export default function ArticlesList() {
           description={article.description}
           url={article.url}
           author={article.author}
-          handleBtnClick={handleSave}
+          handleBtnClick={handleRemove}
           id={article._id}
           article={article}
-          btnText="Save"
+          btnText="Remove"
         />
       ));
     }

@@ -1,25 +1,35 @@
 import React, { useContext } from 'react';
-import axios from 'axios';
+import { Router, Route } from 'react-router-dom';
+import history from '../history';
 import UserContext from '../contexts/UserContext';
 
 import ArticlesList from './ArticlesList';
+import FavoritesList from './FavoritesList';
 import NavBar from './NavBar';
+import Footer from './Footer';
 
 export default function App() {
   const user = useContext(UserContext);
   if (user) {
     return (
       <div>
-        <NavBar />
-        <ArticlesList />
+        <Router history={history}>
+          <NavBar />
+          <Route path="/" exact component={ArticlesList} />
+          <Route path="/favorites" exact component={FavoritesList} />
+          {/* <ArticlesList /> */}
+          <Footer />
+        </Router>
       </div>
     );
   }
   return (
     <div>
-      <NavBar />
-      <h1>PLEASE LOG IN!</h1>
-      <a href="/auth/google">Signin!!!</a>
+      <Router history={history}>
+        <NavBar />
+        <h1>PLEASE LOG IN!</h1>
+        <a href="/auth/google">Signin!!!</a>
+      </Router>
     </div>
   );
 }

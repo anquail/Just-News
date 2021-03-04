@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
@@ -32,6 +33,11 @@ export default function NavBar(props) {
     url: user ? '/api/logout' : '/auth/google',
     text: user ? 'Logout' : 'Login',
   };
+  const menuText = {
+    text: location.pathname === '/' ? 'Favorites' : 'Home',
+    path: location.pathname === '/' ? '/favorites' : '/',
+  };
+  console.log(location.pathname);
 
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -49,7 +55,6 @@ export default function NavBar(props) {
         <Toolbar>
           {user ? (
             <div>
-              {' '}
               <IconButton
                 aria-controls="simple-menu"
                 aria-haspopup="true"
@@ -64,17 +69,20 @@ export default function NavBar(props) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My account</MenuItem>
+                <Link to={menuText.path}>
+                  <MenuItem onClick={handleClose}>{menuText.text}</MenuItem>
+                </Link>
                 <MenuItem onClick={handleClose} href={button.url}>
                   {button.text}
                 </MenuItem>
               </Menu>
             </div>
           ) : null}
-          <Typography variant="h6" className={classes.title}>
-            Newzies
-          </Typography>
+          <Link to="/">
+            <Typography variant="h6" className={classes.title}>
+              Newzies
+            </Typography>
+          </Link>
           <Button color="inherit" className={classes.button} href={button.url}>
             {button.text}
           </Button>

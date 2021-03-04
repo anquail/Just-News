@@ -11,6 +11,7 @@ const app = express();
 
 const authRouter = require('./routes/authRoutes');
 const articleRouter = require('./routes/articleRoutes');
+const listRouter = require('./routes/listRoutes');
 
 mongoose
   .connect(keys.mongoURI, {
@@ -53,6 +54,10 @@ app.get('/api/current_user', (req, res) => {
 app.use('/auth/google', authRouter);
 app.use('/articles', articleRouter, (req, res) => {
   res.send(res.locals.articles);
+});
+
+app.use('/api/lists', listRouter, (req, res) => {
+  res.send(res.locals);
 });
 
 if (process.env.NODE_ENV === 'production') {
