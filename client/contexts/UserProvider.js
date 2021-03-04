@@ -4,6 +4,12 @@ import UserContext from './UserContext';
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const defaultUser = {
+    googleId: '112065755009825382392',
+    lists: [],
+    __v: 0,
+    _id: '603e521a40757a5d51d717a4',
+  };
 
   useEffect(() => {
     axios.get('/api/current_user').then((response) => {
@@ -15,7 +21,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const { Provider } = UserContext;
-  return <Provider value={user}>{children}</Provider>;
+  return <Provider value={defaultUser}>{children}</Provider>;
 };
 
 export default AuthProvider;

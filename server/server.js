@@ -4,11 +4,13 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
+const cors = require('cors');
 const keys = require('./config/keys');
 
 const app = express();
 
 const authRouter = require('./routes/authRoutes');
+const articleRouter = require('./routes/articleRoutes');
 
 mongoose
   .connect(keys.mongoURI, {
@@ -25,6 +27,7 @@ mongoose.connection.once('open', () => {
 
 require('./services/passport');
 
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.use(
@@ -48,6 +51,9 @@ app.get('/api/current_user', (req, res) => {
 });
 
 app.use('/auth/google', authRouter);
+app.use('/articles', articleRouter, (req, res) => {
+  res.send(res.locals.articles);
+});
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/build', express.static(path.join(__dirname, '../build/')));
@@ -56,5 +62,16 @@ if (process.env.NODE_ENV === 'production') {
     res.status(200).sendFile(path.join(__dirname, '../index.html'))
   );
 }
+
+app.use((err, req, res, next) => {
+  const defaultErr = {
+    log: 'Express error handler caught unknown middleware error',
+    status: 500,
+    message: { err: 'An error occurred' },
+  };
+  const errorObj = Object.assign({}, defaultErr, err);
+  console.log(errorObj.log);
+  return res.status(errorObj.status).json(errorObj.message);
+});
 
 app.listen(5000);

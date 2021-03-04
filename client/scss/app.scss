@@ -1,3 +1,12 @@
-body {
-  background: lightblue;
+$primaryColor: #0b0c10;
+$color2: #1f2833;
+$color3: #c5c6c7;
+$color4: #00b1a5;
+$color5: #17706c;
+
+.ArticlesList,
+.ArticleCard {
+  background-color: $color2;
+  padding-top: 25px;
+  color: rgb(226, 224, 224);
 }
