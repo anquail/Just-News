@@ -5,32 +5,14 @@ import UserContext from '../contexts/UserContext';
 
 import articles from './articles';
 
-export default function ArticlesList() {
-  const [list, setList] = useState([]);
-  const user = useContext(UserContext);
-  const [favorites, setFavorites] = useState([]);
-
-  useEffect(() => {
-    if (!list.length) {
-      axios.get('/articles').then((response) => {
-        console.log(response.data);
-        setList(Object.values(response.data).flat().slice(1));
-      });
-      axios.get('/articles/' + user._id).then((response) => {
-        // console.log(response.data);
-        setFavorites(response.data);
-      });
-    }
-  }, []);
-
-  const handleSave = (article, listName) => {
-    console.log(article, listName);
-    setFavorites([...favorites, article]);
-    axios
-      .post('api/lists/' + listName, { article })
-      .then((res) => console.log(res.data));
-  };
-
+export default function ArticlesList({
+  list,
+  setList,
+  user,
+  favorites,
+  setFavorites,
+  handleSave,
+}) {
   const renderCards = () => {
     if (list.length) {
       return list.map((article, i) => (
