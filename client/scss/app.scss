@@ -4,6 +4,24 @@ $color3: #c5c6c7;
 $color4: #00b1a5;
 $color5: #17706c;
 
+#landing {
+  min-height: 100vh;
+  background-color: $color2;
+}
+
+.Landing {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  h1 {
+    font-size: 7rem;
+    margin-bottom: 100px;
+    margin-top: 50px;
+    color: $color4;
+  }
+}
+
 .ArticlesList {
   background-color: $color2;
   padding-top: 25px;
@@ -15,4 +33,17 @@ $color5: #17706c;
   background-color: $color5;
   width: 100vw;
   height: 45px;
+}
+
+.Checkboxes {
+  color: $color3;
+  background-color: $primaryColor;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 30px;
+
+  button {
+    margin-left: 50px;
+  }
 }

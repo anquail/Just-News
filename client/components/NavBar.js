@@ -69,12 +69,14 @@ export default function NavBar(props) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <Link to={menuText.path}>
+                <Link to={menuText.path} style={{ color: 'black' }}>
                   <MenuItem onClick={handleClose}>{menuText.text}</MenuItem>
                 </Link>
-                <MenuItem onClick={handleClose} href={button.url}>
-                  {button.text}
-                </MenuItem>
+                <a href="/api/logout" style={{ color: 'black' }}>
+                  <MenuItem onClick={handleClose} href={button.url}>
+                    {button.text}
+                  </MenuItem>
+                </a>
               </Menu>
             </div>
           ) : null}

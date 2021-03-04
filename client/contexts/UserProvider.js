@@ -38,7 +38,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const { Provider } = UserContext;
-  return <Provider value={user}>{children}</Provider>;
+  return <Provider value={defaultUser}>{children}</Provider>;
 };
 
 export default AuthProvider;

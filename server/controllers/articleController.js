@@ -51,7 +51,6 @@ articleController.getArticlesBySource = (req, res, next) => {
 };
 
 articleController.getUserArticles = (req, res, next) => {
-  console.log(req.params);
   User.findById(req.params.uid)
     .then((user) => {
       console.log(user);
