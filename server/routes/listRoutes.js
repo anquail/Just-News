@@ -4,6 +4,8 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-router.post('/:listName', authController.getUser, listController.createList);
+router
+  .post('/:listName', listController.createList)
+  .delete('/:id', listController.deleteList);
 
 module.exports = router;

@@ -1,26 +1,32 @@
 import React, { useState } from 'react';
 
 export default function ArticleCard({
-  title,
-  imageUrl,
-  description,
-  url,
-  author,
   handleBtnClick,
   btnText,
   article,
+  favorite,
 }) {
   const [error, setError] = useState(false);
+  const { title, urlToImage, description, url, author } = article;
 
   const onError = () => setError(true);
   const btnColor = btnText === 'Save' ? '#00b1a5' : 'rgb(143, 0, 0)';
   const textColor = btnText === 'Save' ? '#1f2833' : 'rgb(226, 224, 224)';
 
+  const inactiveBtn = (
+    <div
+      style={{ backgroundColor: '#c5c6c7', color: textColor }}
+      className="ui right floated disabled tiny button"
+    >
+      Saved!
+    </div>
+  );
+
   if (error) return null;
   return (
     <div className="item" style={{ paddingBottom: '35px' }}>
       <a className="ui small rounded image" href={url}>
-        <img onError={onError} src={imageUrl} />
+        <img onError={onError} src={urlToImage} />
       </a>
       <div className="content" style={{ marginLeft: '30px' }}>
         <a
@@ -39,13 +45,17 @@ export default function ArticleCard({
           <p>{description}</p>
         </div>
         <div className="extra">
-          <div
-            style={{ backgroundColor: btnColor, color: textColor }}
-            className="ui right floated tiny button"
-            onClick={() => handleBtnClick(article, 'favorites')}
-          >
-            {btnText}
-          </div>
+          {favorite ? (
+            inactiveBtn
+          ) : (
+            <div
+              style={{ backgroundColor: btnColor, color: textColor }}
+              className="ui right floated tiny button"
+              onClick={() => handleBtnClick(article, 'favorites')}
+            >
+              {btnText}
+            </div>
+          )}
         </div>
       </div>
     </div>

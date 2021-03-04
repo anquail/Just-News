@@ -42,6 +42,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get('/favorites', (req, res) => {
+  res.redirect('/');
+});
+
 app.get('/api/logout', (req, res) => {
   req.logout();
   res.redirect('/');

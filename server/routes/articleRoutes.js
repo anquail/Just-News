@@ -12,6 +12,10 @@ router.get(
   articleController.getArticlesBySource
 );
 
+router.get('/:uid', articleController.getUserArticles, (req, res) => {
+  res.send(res.locals.articles);
+});
+
 //bbc-news,the-wall-street-journal
 // DONE national-review,the-american-conservative
 // msnbc,the-huffington-post

@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import ArticleCard from './ArticleCard';
+import UserContext from '../contexts/UserContext';
 
 import articles from './articles';
 
 export default function ArticlesList() {
   const [list, setList] = useState([]);
+  const user = useContext(UserContext);
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     if (!list.length) {
@@ -13,11 +16,16 @@ export default function ArticlesList() {
         console.log(response.data);
         setList(Object.values(response.data).flat().slice(1));
       });
+      axios.get('/articles/' + user._id).then((response) => {
+        // console.log(response.data);
+        setFavorites(response.data);
+      });
     }
   }, []);
 
   const handleSave = (article, listName) => {
     console.log(article, listName);
+    setFavorites([...favorites, article]);
     axios
       .post('api/lists/' + listName, { article })
       .then((res) => console.log(res.data));
@@ -28,15 +36,10 @@ export default function ArticlesList() {
       return list.map((article, i) => (
         <ArticleCard
           key={`ArticleCard-${i}`}
-          title={article.title}
-          imageUrl={article.urlToImage}
-          description={article.description}
-          url={article.url}
-          author={article.author}
           handleBtnClick={handleSave}
-          id={article._id}
           article={article}
           btnText="Save"
+          favorite={favorites.some((item) => item._id === article._id)}
         />
       ));
     }

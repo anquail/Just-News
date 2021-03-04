@@ -27,4 +27,21 @@ listController.createList = (req, res, next) => {
   }
 };
 
+listController.deleteList = (req, res, next) => {
+  User.findByIdAndUpdate(
+    req.user.id,
+    {
+      $pull: { favorites: { _id: req.params.id } },
+    },
+    { new: true }
+  )
+    .then((res) => {
+      return next();
+    })
+    .catch((e) => {
+      console.log(e);
+      return next(e);
+    });
+};
+
 module.exports = listController;

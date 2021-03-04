@@ -9,16 +9,20 @@ export default function ArticlesList() {
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    if (user) {
-      setList(user.favorites);
+    if (!list.length) {
+      axios.get('/articles/' + user._id).then((response) => {
+        console.log(response.data);
+        setList(response.data);
+      });
     }
   }, []);
 
   const handleRemove = (article, listName) => {
-    console.log(article, listName);
-    // axios
-    //   .delete('api/lists/' + listName, { article })
-    //   .then((res) => console.log(res.data));
+    const newList = list.filter((item) => item._id !== article._id);
+    setList(newList);
+    axios
+      .delete('api/lists/' + article._id)
+      .then((res) => console.log(res.data));
   };
 
   const renderCards = () => {
@@ -26,15 +30,10 @@ export default function ArticlesList() {
       return list.map((article, i) => (
         <ArticleCard
           key={`ArticleCard-${i}`}
-          title={article.title}
-          imageUrl={article.urlToImage}
-          description={article.description}
-          url={article.url}
-          author={article.author}
           handleBtnClick={handleRemove}
-          id={article._id}
           article={article}
           btnText="Remove"
+          favorite={null}
         />
       ));
     }

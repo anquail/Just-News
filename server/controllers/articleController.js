@@ -1,4 +1,5 @@
 const Article = require('../models/Article');
+const User = require('../models/User');
 
 const articleController = {};
 
@@ -47,6 +48,21 @@ articleController.getArticlesBySource = (req, res, next) => {
       return next();
     });
   }
+};
+
+articleController.getUserArticles = (req, res, next) => {
+  console.log(req.params);
+  User.findById(req.params.uid)
+    .then((user) => {
+      console.log(user);
+      res.locals.articles = user.favorites;
+      return next();
+    })
+    .catch((e) => {
+      return next({
+        log: 'error in getUserArticles',
+      });
+    });
 };
 
 module.exports = articleController;
