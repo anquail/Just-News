@@ -22,7 +22,9 @@ export default function Checkboxes() {
     if (!labels.length) return;
     const query = '/articles/?id[]=' + labels.join('&id[]=');
     console.log(query);
-    axios.get(query).then((res) => console.log(res.data));
+    axios
+      .get(query)
+      .then((res) => setList(Object.values(res.data).flat().slice(1)));
   };
 
   useEffect(() => {
@@ -32,7 +34,6 @@ export default function Checkboxes() {
         setList(Object.values(response.data).flat().slice(1));
       });
       axios.get('/articles/' + user._id).then((response) => {
-        // console.log(response.data);
         setFavorites(response.data);
       });
     }
